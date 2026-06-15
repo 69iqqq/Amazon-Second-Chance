@@ -11,9 +11,9 @@ export declare class ListingsController {
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
+        title: string;
         sellerId: string;
         productId: string;
-        title: string;
         price: import("@prisma/client/runtime/library").Decimal;
         listingType: import(".prisma/client").$Enums.ListingType;
         viewCount: number;
@@ -25,9 +25,9 @@ export declare class ListingsController {
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
+        title: string;
         sellerId: string;
         productId: string;
-        title: string;
         price: import("@prisma/client/runtime/library").Decimal;
         listingType: import(".prisma/client").$Enums.ListingType;
         viewCount: number;
@@ -39,9 +39,9 @@ export declare class ListingsController {
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
+        title: string;
         sellerId: string;
         productId: string;
-        title: string;
         price: import("@prisma/client/runtime/library").Decimal;
         listingType: import(".prisma/client").$Enums.ListingType;
         viewCount: number;
