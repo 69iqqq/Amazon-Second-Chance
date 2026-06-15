@@ -1,0 +1,417 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Req 3.9: SecondChanceShell composes the Amazon-official structure > matches the committed snapshot for a representative surface 1`] = `
+<div>
+  <header
+    class="sticky top-0 z-40 w-full bg-background text-foreground border-b border-border border-t-2 border-t-accent-secondchance"
+  >
+    <div
+      class="mx-auto flex w-full max-w-[1500px] flex-col gap-2 px-6 py-3"
+    >
+      <div
+        class="flex items-center justify-between gap-4"
+      >
+        <a
+          aria-label="Amazon Second Chance"
+          class="inline-flex items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          href="/second-life"
+        >
+          <img
+            alt="Amazon Second Chance"
+            class="h-10 w-auto"
+            height="48"
+            loading="eager"
+            src="/logos/second-chance-wordmark.svg"
+            width="260"
+          />
+        </a>
+        <a
+          class="inline-flex items-center rounded-sm px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          href="/"
+        >
+          Back to Amazon Store
+        </a>
+      </div>
+      <nav
+        aria-label="Second Chance"
+        class="-mx-2"
+      >
+        <ul
+          class="flex flex-wrap items-center gap-1"
+        >
+          <li>
+            <a
+              aria-current="page"
+              class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-accent-secondchance text-accent-secondchance"
+              href="/second-life"
+            >
+              Second Chance Home
+            </a>
+          </li>
+          <li>
+            <a
+              class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+              href="/shop-refurbished"
+            >
+              Shop Refurbished
+            </a>
+          </li>
+          <li>
+            <a
+              class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+              href="/second-life/buy"
+            >
+              Buy
+            </a>
+          </li>
+          <li>
+            <a
+              class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+              href="/second-life/sell"
+            >
+              Sell
+            </a>
+          </li>
+          <li>
+            <a
+              class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+              href="/second-life/partner"
+            >
+              Become a Partner
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div
+    class="bg-background min-h-screen w-full"
+  >
+    <div
+      class="mx-auto w-full max-w-[1500px] px-6 py-8"
+    >
+      <header
+        class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+      >
+        <div
+          class="space-y-1"
+        >
+          <h1
+            class="font-heading text-2xl font-semibold leading-tight text-foreground"
+          >
+            Seller Central
+          </h1>
+          <p
+            class="max-w-prose text-sm text-muted-foreground"
+          >
+            Manage your Amazon 2nd Chance listings, orders, and payouts.
+          </p>
+        </div>
+        <div
+          class="flex flex-wrap gap-2 sm:shrink-0"
+        >
+          <a
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            href="/second-life/sell"
+          >
+            List an item
+          </a>
+        </div>
+      </header>
+      <p>
+        Surface content.
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Req 3.9: ShellHeader renders the Amazon-official navbar chrome > matches the committed snapshot (wordmark + fixed nav + storefront return + accent) 1`] = `
+<header
+  class="sticky top-0 z-40 w-full bg-background text-foreground border-b border-border border-t-2 border-t-accent-secondchance"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1500px] flex-col gap-2 px-6 py-3"
+  >
+    <div
+      class="flex items-center justify-between gap-4"
+    >
+      <a
+        aria-label="Amazon Second Chance"
+        class="inline-flex items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        href="/second-life"
+      >
+        <img
+          alt="Amazon Second Chance"
+          class="h-10 w-auto"
+          height="48"
+          loading="eager"
+          src="/logos/second-chance-wordmark.svg"
+          width="260"
+        />
+      </a>
+      <a
+        class="inline-flex items-center rounded-sm px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        href="/"
+      >
+        Back to Amazon Store
+      </a>
+    </div>
+    <nav
+      aria-label="Second Chance"
+      class="-mx-2"
+    >
+      <ul
+        class="flex flex-wrap items-center gap-1"
+      >
+        <li>
+          <a
+            aria-current="page"
+            class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-accent-secondchance text-accent-secondchance"
+            href="/second-life"
+          >
+            Second Chance Home
+          </a>
+        </li>
+        <li>
+          <a
+            class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+            href="/shop-refurbished"
+          >
+            Shop Refurbished
+          </a>
+        </li>
+        <li>
+          <a
+            class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+            href="/second-life/buy"
+          >
+            Buy
+          </a>
+        </li>
+        <li>
+          <a
+            class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+            href="/second-life/sell"
+          >
+            Sell
+          </a>
+        </li>
+        <li>
+          <a
+            class="inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance"
+            href="/second-life/partner"
+          >
+            Become a Partner
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Admin portal'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      System Admin
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Global ecosystem overview, AI evaluation logs, and partner management.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Buy catalogue'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      Amazon 2nd Chance Catalogue
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Showing 1-24 results for AI Graded and Refurbished products.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Customer portal'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      Your 2nd Chance Impact
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Track your green credits, shop certified pre-owned and refurbished finds, and manage your returns.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Kirana portal'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      Kirana Hub
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Manage local pickups, verify item conditions, and store inventory.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'NGO portal'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      NGO Partner Dashboard
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Review AI-routed donations, manage your needs registry, and track items received for the families you serve.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Partner'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      Become a Partner
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Join Amazon's sustainable commerce ecosystem. Whether you're a seller, a local store, or an NGO — there's a partner programme built for you.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Second Life landing'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      Amazon Second Chance
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Buy certified pre-owned and refurbished finds, sell or recycle items you no longer need, and partner with us to power the circular economy.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Sell'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      List an Item on Amazon 2nd Chance
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Select an item from your past purchases to assess for resale, donation, or recycling.
+    </p>
+  </div>
+</header>
+`;
+
+exports[`Req 3.9: migrated surface PageHeaders render in the Amazon-official style > matches the committed snapshot for "'Seller portal'" 1`] = `
+<header
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div
+    class="space-y-1"
+  >
+    <h1
+      class="font-heading text-2xl font-semibold leading-tight text-foreground"
+    >
+      Seller Central
+    </h1>
+    <p
+      class="max-w-prose text-sm text-muted-foreground"
+    >
+      Manage your Amazon 2nd Chance listings, orders, and payouts.
+    </p>
+  </div>
+  <div
+    class="flex flex-wrap gap-2 sm:shrink-0"
+  >
+    <a
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      href="/second-life/sell"
+    >
+      List an item
+    </a>
+    <a
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      href="/seller"
+    >
+      View payouts
+    </a>
+  </div>
+</header>
+`;

@@ -1,0 +1,937 @@
+// ============================================================================
+// Amazon 2nd Chance — Prisma Schema
+// ============================================================================
+// Database:    Neon PostgreSQL (serverless)
+// Auth:        Clerk (external authentication)
+// ORM:         Prisma
+// Conventions: UUID PKs, snake_case tables, camelCase fields,
+//              createdAt/updatedAt audit fields, soft delete where appropriate
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum UserRole {
+  CUSTOMER
+  SELLER
+  KIRANA_PARTNER
+  NGO
+  RECYCLER
+  REFURBISHMENT_CENTER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+  PENDING_VERIFICATION
+}
+
+enum ProductStatus {
+  NEW
+  USED
+  REFURBISHED
+  DONATED
+  RECYCLED
+  TRADED_IN
+  SOLD
+  LISTED
+}
+
+enum ProductGradeValue {
+  GRADE_A_PLUS
+  GRADE_A
+  GRADE_B
+  GRADE_C
+  GRADE_D
+  GRADE_F
+}
+
+enum ReturnStatus {
+  REQUESTED
+  APPROVED
+  PICKUP_SCHEDULED
+  COLLECTED
+  UNDER_REVIEW
+  COMPLETED
+  REJECTED
+  CANCELLED
+}
+
+enum DispositionType {
+  RESELL
+  REFURBISH
+  DONATE
+  RECYCLE
+  EXCHANGE
+}
+
+enum ListingType {
+  NEW
+  REFURBISHED
+  PRE_OWNED
+  TRADE_IN
+}
+
+enum ListingStatus {
+  DRAFT
+  ACTIVE
+  SOLD
+  EXPIRED
+  REMOVED
+}
+
+enum TransactionStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  COMPLETED
+  REFUNDED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PLACED
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+enum TradeInStatus {
+  SUBMITTED
+  VALUATED
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+enum RefurbishmentStatus {
+  PENDING
+  IN_PROGRESS
+  INSPECTION
+  CERTIFIED
+  COMPLETED
+  FAILED
+}
+
+enum DonationStatus {
+  PENDING
+  ASSIGNED
+  SHIPPED
+  RECEIVED
+  VERIFIED
+}
+
+enum RecyclingStatus {
+  PENDING
+  ASSIGNED
+  PROCESSING
+  COMPLETED
+}
+
+enum CreditTransactionType {
+  EARNED
+  REDEEMED
+  EXPIRED
+  ADJUSTED
+}
+
+enum NotificationChannel {
+  EMAIL
+  SMS
+  PUSH
+  IN_APP
+}
+
+enum NotificationType {
+  RETURN_UPDATE
+  LISTING_UPDATE
+  ORDER_UPDATE
+  DONATION_UPDATE
+  CREDIT_EARNED
+  CREDIT_REDEEMED
+  SYSTEM_ALERT
+  PARTNER_UPDATE
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum PartnerType {
+  NGO
+  RECYCLER
+  KIRANA_HUB
+  REFURBISHMENT_CENTER
+}
+
+enum PartnerStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  PENDING_VERIFICATION
+}
+
+enum ProductHistoryEventType {
+  PURCHASED
+  RETURNED
+  GRADED
+  DISPOSITIONED
+  REFURBISHED
+  LISTED
+  SOLD
+  DONATED
+  RECYCLED
+  TRADED_IN
+  CERTIFIED
+}
+
+enum PickupStatus {
+  SCHEDULED
+  IN_TRANSIT
+  ARRIVED
+  COMPLETED
+  CANCELLED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
+
+// ============================================================================
+// IDENTITY & ACCESS CONTEXT
+// ============================================================================
+
+/// Platform user — synced from Clerk via webhooks.
+/// Clerk handles authentication; this table stores app-specific data.
+model User {
+  id        String     @id @default(uuid()) @db.Uuid
+  clerkId   String     @unique @map("clerk_id") @db.VarChar(255)
+  email     String     @unique @db.VarChar(255)
+  firstName String?    @map("first_name") @db.VarChar(100)
+  lastName  String?    @map("last_name") @db.VarChar(100)
+  phone     String?    @db.VarChar(30)
+  imageUrl  String?    @map("image_url") @db.Text
+  role      UserRole   @default(CUSTOMER)
+  status    UserStatus @default(ACTIVE)
+  deletedAt DateTime?  @map("deleted_at")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  // Relationships
+  profile               UserProfile?
+  sellerProfile         SellerProfile?
+  listings              Listing[]
+  returnRequests        ReturnRequest[]
+  tradeInRequests       TradeInRequest[]
+  greenCreditWallet     GreenCreditWallet?
+  sustainabilityProfile SustainabilityProfile?
+  notifications         Notification[]
+  buyerTransactions     MarketplaceTransaction[] @relation("BuyerTransactions")
+  sellerTransactions    MarketplaceTransaction[] @relation("SellerTransactions")
+  orders                Order[]
+  reviewsWritten        Review[]
+  products              Product[]                @relation("ProductOwner")
+  interactions          UserInteraction[]
+
+  @@index([role], map: "idx_users_role")
+  @@index([status], map: "idx_users_status")
+  @@index([clerkId], map: "idx_users_clerk_id")
+  @@map("users")
+}
+
+/// Extended user profile with address information.
+model UserProfile {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @unique @map("user_id") @db.Uuid
+  avatarUrl  String?  @map("avatar_url") @db.Text
+  address    String?  @db.Text
+  city       String?  @db.VarChar(100)
+  state      String?  @db.VarChar(100)
+  country    String?  @db.VarChar(100)
+  postalCode String?  @map("postal_code") @db.VarChar(20)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_profiles")
+}
+
+/// Extended profile for Amazon Sellers.
+model SellerProfile {
+  id               String   @id @default(uuid()) @db.Uuid
+  userId           String   @unique @map("user_id") @db.Uuid
+  businessName     String   @map("business_name") @db.VarChar(255)
+  taxId            String?  @map("tax_id") @db.VarChar(100)
+  storeDescription String?  @map("store_description") @db.Text
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("seller_profiles")
+}
+
+// ============================================================================
+// PRODUCT CONTEXT
+// ============================================================================
+
+/// Product category for organizing the catalog.
+model ProductCategory {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @db.VarChar(150)
+  description String?  @db.Text
+  slug        String   @unique @db.VarChar(150)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  products Product[]
+
+  @@map("product_categories")
+}
+
+/// Physical product tracked throughout its lifecycle.
+model Product {
+  id            String        @id @default(uuid()) @db.Uuid
+  sku           String?       @unique @db.VarChar(100)
+  name          String        @db.VarChar(255)
+  description   String?       @db.Text
+  brand         String?       @db.VarChar(100)
+  categoryId    String?       @map("category_id") @db.Uuid
+  ownerId       String?       @map("owner_id") @db.Uuid
+  originalPrice Decimal       @map("original_price") @db.Decimal(12, 2)
+  currentValue  Decimal?      @map("current_value") @db.Decimal(12, 2)
+  status        ProductStatus @default(NEW)
+  deletedAt     DateTime?     @map("deleted_at")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  // Relationships
+  category             ProductCategory?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  owner                User?                 @relation("ProductOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  images               ProductImage[]
+  grades               ProductGrade[]
+  history              ProductHistory[]
+  dispositionDecisions DispositionDecision[]
+  listings             Listing[]
+  returnRequests       ReturnRequest[]
+  refurbishmentRecords RefurbishmentRecord[]
+  donationRecords      DonationRecord[]
+  recyclingRecords     RecyclingRecord[]
+  tradeInRequests      TradeInRequest[]
+  orderItems           OrderItem[]
+  interactions         UserInteraction[]
+
+  @@index([categoryId], map: "idx_products_category")
+  @@index([status], map: "idx_products_status")
+  @@index([ownerId], map: "idx_products_owner")
+  @@index([brand], map: "idx_products_brand")
+  @@map("products")
+}
+
+/// Product images stored in S3.
+model ProductImage {
+  id        String   @id @default(uuid()) @db.Uuid
+  productId String   @map("product_id") @db.Uuid
+  imageUrl  String   @map("image_url") @db.Text
+  altText   String?  @map("alt_text") @db.VarChar(255)
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId], map: "idx_product_images_product")
+  @@map("product_images")
+}
+
+// ============================================================================
+// AI GRADING CONTEXT
+// ============================================================================
+
+/// AI-generated product condition grade.
+model ProductGrade {
+  id              String            @id @default(uuid()) @db.Uuid
+  productId       String            @map("product_id") @db.Uuid
+  grade           ProductGradeValue
+  confidenceScore Decimal           @map("confidence_score") @db.Decimal(5, 2)
+  damageSummary   String?           @map("damage_summary") @db.Text
+  gradedBy        String            @map("graded_by") @db.VarChar(50) // "AI" or admin userId
+  isLatest        Boolean           @default(true) @map("is_latest")
+  createdAt       DateTime          @default(now()) @map("created_at")
+
+  // Relationships
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId], map: "idx_product_grades_product")
+  @@index([grade], map: "idx_product_grades_grade")
+  @@index([productId, isLatest], map: "idx_product_grades_latest")
+  @@map("product_grades")
+}
+
+// ============================================================================
+// PRODUCT HISTORY CONTEXT
+// ============================================================================
+
+/// Immutable audit trail of product lifecycle events.
+model ProductHistory {
+  id          String                  @id @default(uuid()) @db.Uuid
+  productId   String                  @map("product_id") @db.Uuid
+  eventType   ProductHistoryEventType @map("event_type")
+  description String?                 @db.Text
+  metadata    Json? // Flexible JSON for event-specific data
+  eventTime   DateTime                @default(now()) @map("event_time")
+
+  // Relationships
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId], map: "idx_product_history_product")
+  @@index([eventType], map: "idx_product_history_event_type")
+  @@map("product_history")
+}
+
+// ============================================================================
+// RETURN CONTEXT
+// ============================================================================
+
+/// Customer-initiated product return request.
+model ReturnRequest {
+  id          String       @id @default(uuid()) @db.Uuid
+  userId      String       @map("user_id") @db.Uuid
+  productId   String       @map("product_id") @db.Uuid
+  reason      String       @db.Text
+  status      ReturnStatus @default(REQUESTED)
+  requestedAt DateTime     @default(now()) @map("requested_at")
+  approvedAt  DateTime?    @map("approved_at")
+  completedAt DateTime?    @map("completed_at")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  // Relationships
+  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product              Product               @relation(fields: [productId], references: [id], onDelete: Cascade)
+  media                ReturnMedia[]
+  dispositionDecisions DispositionDecision[]
+
+  @@index([userId], map: "idx_return_requests_user")
+  @@index([productId], map: "idx_return_requests_product")
+  @@index([status], map: "idx_return_requests_status")
+  @@index([userId, status], map: "idx_return_requests_user_status")
+  @@map("return_requests")
+}
+
+/// Media uploaded as evidence for a return request.
+model ReturnMedia {
+  id              String    @id @default(uuid()) @db.Uuid
+  returnRequestId String    @map("return_request_id") @db.Uuid
+  mediaUrl        String    @map("media_url") @db.Text
+  mediaType       MediaType @map("media_type")
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  // Relationships
+  returnRequest ReturnRequest @relation(fields: [returnRequestId], references: [id], onDelete: Cascade)
+
+  @@index([returnRequestId], map: "idx_return_media_request")
+  @@map("return_media")
+}
+
+// ============================================================================
+// AI DISPOSITION CONTEXT
+// ============================================================================
+
+/// AI-generated decision about the optimal next action for a product.
+model DispositionDecision {
+  id              String          @id @default(uuid()) @db.Uuid
+  productId       String          @map("product_id") @db.Uuid
+  returnRequestId String?         @map("return_request_id") @db.Uuid
+  decision        DispositionType
+  confidence      Decimal         @db.Decimal(5, 2)
+  reason          String?         @db.Text
+  isOverridden    Boolean         @default(false) @map("is_overridden")
+  overriddenBy    String?         @map("overridden_by") @db.Uuid // Admin user ID
+  overrideReason  String?         @map("override_reason") @db.Text
+  createdAt       DateTime        @default(now()) @map("created_at")
+
+  // Relationships
+  product       Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  returnRequest ReturnRequest? @relation(fields: [returnRequestId], references: [id], onDelete: SetNull)
+
+  @@index([productId], map: "idx_disposition_product")
+  @@index([decision], map: "idx_disposition_decision")
+  @@index([returnRequestId], map: "idx_disposition_return_request")
+  @@map("disposition_decisions")
+}
+
+// ============================================================================
+// MARKETPLACE CONTEXT
+// ============================================================================
+
+/// A product listing in the refurbished or P2P marketplace.
+model Listing {
+  id          String        @id @default(uuid()) @db.Uuid
+  sellerId    String        @map("seller_id") @db.Uuid
+  productId   String        @map("product_id") @db.Uuid
+  title       String        @db.VarChar(255)
+  description String?       @db.Text
+  price       Decimal       @db.Decimal(12, 2)
+  listingType ListingType   @map("listing_type")
+  status      ListingStatus @default(DRAFT)
+  viewCount   Int           @default(0) @map("view_count")
+  deletedAt   DateTime?     @map("deleted_at")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  // Relationships
+  seller       User                     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  product      Product                  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  transactions MarketplaceTransaction[]
+  reviews      Review[]
+  orderItems   OrderItem[]
+
+  @@index([sellerId], map: "idx_listings_seller")
+  @@index([productId], map: "idx_listings_product")
+  @@index([status], map: "idx_listings_status")
+  @@index([listingType], map: "idx_listings_type")
+  @@index([status, listingType], map: "idx_listings_status_type")
+  @@map("listings")
+}
+
+/// A completed or in-progress marketplace transaction.
+model MarketplaceTransaction {
+  id               String            @id @default(uuid()) @db.Uuid
+  listingId        String            @map("listing_id") @db.Uuid
+  buyerId          String            @map("buyer_id") @db.Uuid
+  sellerId         String            @map("seller_id") @db.Uuid
+  amount           Decimal           @db.Decimal(12, 2)
+  status           TransactionStatus @default(PENDING)
+  paymentReference String?           @map("payment_reference") @db.VarChar(255)
+  completedAt      DateTime?         @map("completed_at")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+
+  // Relationships
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  buyer   User    @relation("BuyerTransactions", fields: [buyerId], references: [id], onDelete: Cascade)
+  seller  User    @relation("SellerTransactions", fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@index([buyerId], map: "idx_transactions_buyer")
+  @@index([sellerId], map: "idx_transactions_seller")
+  @@index([listingId], map: "idx_transactions_listing")
+  @@index([status], map: "idx_transactions_status")
+  @@map("marketplace_transactions")
+}
+
+// ============================================================================
+// ORDER CONTEXT
+// ============================================================================
+
+/// Customer order from the marketplace.
+model Order {
+  id              String      @id @default(uuid()) @db.Uuid
+  userId          String      @map("user_id") @db.Uuid
+  status          OrderStatus @default(PLACED)
+  totalAmount     Decimal     @map("total_amount") @db.Decimal(12, 2)
+  shippingAddress String?     @map("shipping_address") @db.Text
+  trackingNumber  String?     @map("tracking_number") @db.VarChar(100)
+  completedAt     DateTime?   @map("completed_at")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  // Relationships
+  user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items OrderItem[]
+
+  @@index([userId], map: "idx_orders_user")
+  @@index([status], map: "idx_orders_status")
+  @@map("orders")
+}
+
+/// Individual item within an order.
+model OrderItem {
+  id        String  @id @default(uuid()) @db.Uuid
+  orderId   String  @map("order_id") @db.Uuid
+  listingId String  @map("listing_id") @db.Uuid
+  productId String  @map("product_id") @db.Uuid
+  price        Decimal @db.Decimal(12, 2)
+  quantity     Int     @default(1)
+  isReturnable Boolean @default(true) @map("is_returnable")
+  returnFee    Decimal? @map("return_fee") @db.Decimal(12, 2)
+
+  // Relationships
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([orderId], map: "idx_order_items_order")
+  @@map("order_items")
+}
+
+// ============================================================================
+// REVIEW CONTEXT
+// ============================================================================
+
+/// Product or listing review from a buyer.
+model Review {
+  id        String       @id @default(uuid()) @db.Uuid
+  listingId String       @map("listing_id") @db.Uuid
+  userId    String       @map("user_id") @db.Uuid
+  rating    Int // 1-5
+  title     String?      @db.VarChar(255)
+  comment   String?      @db.Text
+  status    ReviewStatus @default(PENDING)
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+
+  // Relationships
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([listingId, userId], map: "uq_review_listing_user") // One review per user per listing
+  @@index([listingId], map: "idx_reviews_listing")
+  @@index([userId], map: "idx_reviews_user")
+  @@map("reviews")
+}
+
+// ============================================================================
+// REFURBISHMENT CONTEXT
+// ============================================================================
+
+/// Refurbishment job assigned to a partner.
+model RefurbishmentRecord {
+  id               String              @id @default(uuid()) @db.Uuid
+  productId        String              @map("product_id") @db.Uuid
+  partnerId        String              @map("partner_id") @db.Uuid
+  status           RefurbishmentStatus @default(PENDING)
+  repairCost       Decimal?            @map("repair_cost") @db.Decimal(12, 2)
+  inspectionReport String?             @map("inspection_report") @db.Text
+  startedAt        DateTime?           @map("started_at")
+  completedAt      DateTime?           @map("completed_at")
+  createdAt        DateTime            @default(now()) @map("created_at")
+  updatedAt        DateTime            @updatedAt @map("updated_at")
+
+  // Relationships
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  partner Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+
+  @@index([productId], map: "idx_refurbishment_product")
+  @@index([partnerId], map: "idx_refurbishment_partner")
+  @@index([status], map: "idx_refurbishment_status")
+  @@map("refurbishment_records")
+}
+
+// ============================================================================
+// TRADE-IN CONTEXT
+// ============================================================================
+
+/// Customer trade-in/exchange request.
+model TradeInRequest {
+  id             String        @id @default(uuid()) @db.Uuid
+  userId         String        @map("user_id") @db.Uuid
+  productId      String        @map("product_id") @db.Uuid
+  estimatedValue Decimal?      @map("estimated_value") @db.Decimal(12, 2)
+  finalValue     Decimal?      @map("final_value") @db.Decimal(12, 2)
+  voucherCode    String?       @unique @map("voucher_code") @db.VarChar(50)
+  status         TradeInStatus @default(SUBMITTED)
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  // Relationships
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_trade_in_user")
+  @@index([status], map: "idx_trade_in_status")
+  @@map("trade_in_requests")
+}
+
+// ============================================================================
+// GREEN CREDITS CONTEXT
+// ============================================================================
+
+/// User's green credit wallet — one per user.
+model GreenCreditWallet {
+  id               String   @id @default(uuid()) @db.Uuid
+  userId           String   @unique @map("user_id") @db.Uuid
+  balance          Int      @default(0)
+  lifetimeEarned   Int      @default(0) @map("lifetime_earned")
+  lifetimeRedeemed Int      @default(0) @map("lifetime_redeemed")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  user         User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions GreenCreditTransaction[]
+
+  @@map("green_credit_wallets")
+}
+
+/// Individual credit earn/redeem/expire transaction.
+model GreenCreditTransaction {
+  id        String                @id @default(uuid()) @db.Uuid
+  walletId  String                @map("wallet_id") @db.Uuid
+  amount    Int
+  type      CreditTransactionType
+  reason    String?               @db.Text
+  createdAt DateTime              @default(now()) @map("created_at")
+
+  // Relationships
+  wallet GreenCreditWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@index([walletId], map: "idx_credit_tx_wallet")
+  @@index([walletId, createdAt], map: "idx_credit_tx_wallet_date")
+  @@index([type], map: "idx_credit_tx_type")
+  @@map("green_credit_transactions")
+}
+
+// ============================================================================
+// SUSTAINABILITY CONTEXT
+// ============================================================================
+
+/// User's environmental impact profile — one per user.
+model SustainabilityProfile {
+  id                  String   @id @default(uuid()) @db.Uuid
+  userId              String   @unique @map("user_id") @db.Uuid
+  co2Saved            Decimal  @default(0) @map("co2_saved") @db.Decimal(12, 2)
+  productsReused      Int      @default(0) @map("products_reused")
+  productsRecycled    Int      @default(0) @map("products_recycled")
+  donationsMade       Int      @default(0) @map("donations_made")
+  sustainabilityScore Int      @default(0) @map("sustainability_score")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sustainability_profiles")
+}
+
+// ============================================================================
+// PARTNER CONTEXT
+// ============================================================================
+
+/// External partner (NGO, Recycler, Kirana Hub, Refurbishment Center).
+model Partner {
+  id        String        @id @default(uuid()) @db.Uuid
+  name      String        @db.VarChar(255)
+  type      PartnerType
+  email     String        @db.VarChar(255)
+  phone     String?       @db.VarChar(50)
+  address   String?       @db.Text
+  city      String?       @db.VarChar(100)
+  state     String?       @db.VarChar(100)
+  country   String?       @db.VarChar(100)
+  latitude  Decimal?      @db.Decimal(10, 7)
+  longitude Decimal?      @db.Decimal(10, 7)
+  keywords  String[]      @default([])
+  needs     String?       @db.Text
+  distanceText String?    @map("distance_text") @db.VarChar(50)
+  status    PartnerStatus @default(PENDING_VERIFICATION)
+  deletedAt DateTime?     @map("deleted_at")
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+
+  // Relationships
+  refurbishmentRecords RefurbishmentRecord[]
+  donationRecords      DonationRecord[]
+  recyclingRecords     RecyclingRecord[]
+  kiranaPickups        KiranaPickup[]
+  earnings             PartnerEarning[]
+
+  @@index([type], map: "idx_partners_type")
+  @@index([status], map: "idx_partners_status")
+  @@index([type, status], map: "idx_partners_type_status")
+  @@map("partners")
+}
+
+// ============================================================================
+// DONATION CONTEXT
+// ============================================================================
+
+/// Product donation assigned to an NGO partner.
+model DonationRecord {
+  id         String         @id @default(uuid()) @db.Uuid
+  productId  String         @map("product_id") @db.Uuid
+  ngoId      String         @map("ngo_id") @db.Uuid
+  status     DonationStatus @default(PENDING)
+  donatedAt  DateTime?      @map("donated_at")
+  verifiedAt DateTime?      @map("verified_at")
+  createdAt  DateTime       @default(now()) @map("created_at")
+  updatedAt  DateTime       @updatedAt @map("updated_at")
+
+  // Relationships
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  ngo     Partner @relation(fields: [ngoId], references: [id], onDelete: Cascade)
+
+  @@index([ngoId], map: "idx_donations_ngo")
+  @@index([status], map: "idx_donations_status")
+  @@index([productId], map: "idx_donations_product")
+  @@map("donation_records")
+}
+
+// ============================================================================
+// RECYCLING CONTEXT
+// ============================================================================
+
+/// Product recycling job assigned to a recycler partner.
+model RecyclingRecord {
+  id                String          @id @default(uuid()) @db.Uuid
+  productId         String          @map("product_id") @db.Uuid
+  recyclerId        String          @map("recycler_id") @db.Uuid
+  status            RecyclingStatus @default(PENDING)
+  materialRecovered String?         @map("material_recovered") @db.Text
+  completedAt       DateTime?       @map("completed_at")
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime        @updatedAt @map("updated_at")
+
+  // Relationships
+  product  Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  recycler Partner @relation(fields: [recyclerId], references: [id], onDelete: Cascade)
+
+  @@index([recyclerId], map: "idx_recycling_recycler")
+  @@index([status], map: "idx_recycling_status")
+  @@index([productId], map: "idx_recycling_product")
+  @@map("recycling_records")
+}
+
+// ============================================================================
+// KIRANA PICKUP CONTEXT
+// ============================================================================
+
+/// Pickup request at a Kirana partner hub.
+model KiranaPickup {
+  id            String       @id @default(uuid()) @db.Uuid
+  partnerId     String       @map("partner_id") @db.Uuid
+  productId     String?      @map("product_id") @db.Uuid
+  customerName  String       @map("customer_name") @db.VarChar(200)
+  customerPhone String?      @map("customer_phone") @db.VarChar(30)
+  status        PickupStatus @default(SCHEDULED)
+  scheduledDate DateTime     @map("scheduled_date")
+  completedAt   DateTime?    @map("completed_at")
+  notes         String?      @db.Text
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  // Relationships
+  partner Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+
+  @@index([partnerId], map: "idx_kirana_pickups_partner")
+  @@index([status], map: "idx_kirana_pickups_status")
+  @@index([scheduledDate], map: "idx_kirana_pickups_date")
+  @@map("kirana_pickups")
+}
+
+// ============================================================================
+// PARTNER EARNINGS CONTEXT
+// ============================================================================
+
+/// Commission or earning record for a partner.
+model PartnerEarning {
+  id          String    @id @default(uuid()) @db.Uuid
+  partnerId   String    @map("partner_id") @db.Uuid
+  amount      Decimal   @db.Decimal(12, 2)
+  description String?   @db.Text
+  referenceId String?   @map("reference_id") @db.Uuid // ID of related entity
+  paidAt      DateTime? @map("paid_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relationships
+  partner Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+
+  @@index([partnerId], map: "idx_partner_earnings_partner")
+  @@index([partnerId, createdAt], map: "idx_partner_earnings_partner_date")
+  @@map("partner_earnings")
+}
+
+// ============================================================================
+// NOTIFICATION CONTEXT
+// ============================================================================
+
+/// User notification across multiple channels.
+model Notification {
+  id        String              @id @default(uuid()) @db.Uuid
+  userId    String              @map("user_id") @db.Uuid
+  title     String              @db.VarChar(255)
+  message   String              @db.Text
+  type      NotificationType
+  channel   NotificationChannel @default(IN_APP)
+  isRead    Boolean             @default(false) @map("is_read")
+  readAt    DateTime?           @map("read_at")
+  createdAt DateTime            @default(now()) @map("created_at")
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_notifications_user")
+  @@index([userId, isRead], map: "idx_notifications_user_unread")
+  @@index([type], map: "idx_notifications_type")
+  @@map("notifications")
+}
+
+// ============================================================================
+// ANALYTICS CONTEXT
+// ============================================================================
+
+/// Platform-wide KPI metrics for dashboards.
+model KpiRecord {
+  id          String   @id @default(uuid()) @db.Uuid
+  metricName  String   @map("metric_name") @db.VarChar(255)
+  metricValue Decimal  @map("metric_value") @db.Decimal(18, 2)
+  metadata    Json? // Additional context
+  recordedAt  DateTime @default(now()) @map("recorded_at")
+
+  @@index([metricName], map: "idx_kpi_metric_name")
+  @@index([metricName, recordedAt], map: "idx_kpi_metric_date")
+  @@map("kpi_records")
+}
+
+// ============================================================================
+// INTELLIGENCE CONTEXT
+// ============================================================================
+
+enum InteractionType {
+  VIEWED
+  SEARCHED
+  ADDED_TO_CART
+  PURCHASED
+}
+
+/// Tracks user interactions with products for personalized recommendations
+model UserInteraction {
+  id        String          @id @default(uuid()) @db.Uuid
+  userId    String?         @map("user_id") @db.Uuid // Optional for guest interactions linked by session if we wanted
+  productId String          @map("product_id") @db.Uuid
+  action    InteractionType
+  createdAt DateTime        @default(now()) @map("created_at")
+
+  // Relationships
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_interactions_user")
+  @@index([productId], map: "idx_interactions_product")
+  @@index([action], map: "idx_interactions_action")
+  @@map("user_interactions")
+}

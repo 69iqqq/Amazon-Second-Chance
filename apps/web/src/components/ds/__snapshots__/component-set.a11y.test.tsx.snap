@@ -1,0 +1,268 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`shared component set — Amazon-official snapshots > Badge variant "error" renders its official markup 1`] = `
+<div
+  class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-error/15 text-neutral-900 border-error"
+>
+  <span
+    class="sr-only"
+  >
+    Error
+    : 
+  </span>
+  Status
+</div>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Badge variant "info" renders its official markup 1`] = `
+<div
+  class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-info/15 text-neutral-900 border-info"
+>
+  <span
+    class="sr-only"
+  >
+    Info
+    : 
+  </span>
+  Status
+</div>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Badge variant "neutral" renders its official markup 1`] = `
+<div
+  class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-neutral-100 text-neutral-800 border-neutral-300"
+>
+  Status
+</div>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Badge variant "success" renders its official markup 1`] = `
+<div
+  class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-success/15 text-neutral-900 border-success"
+>
+  <span
+    class="sr-only"
+  >
+    Success
+    : 
+  </span>
+  Status
+</div>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Badge variant "warning" renders its official markup 1`] = `
+<div
+  class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-warning/15 text-neutral-900 border-warning"
+>
+  <span
+    class="sr-only"
+  >
+    Warning
+    : 
+  </span>
+  Status
+</div>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Button variant "danger" renders its official markup 1`] = `
+<button
+  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-sm h-9 px-4 py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-danger text-danger-foreground hover:bg-danger/90"
+>
+  Save changes
+</button>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Button variant "ghost" renders its official markup 1`] = `
+<button
+  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+>
+  Save changes
+</button>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Button variant "primary" renders its official markup 1`] = `
+<button
+  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+>
+  Save changes
+</button>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Button variant "secondary" renders its official markup 1`] = `
+<button
+  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 py-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+>
+  Save changes
+</button>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Card with header/title/content renders its official markup 1`] = `
+<div
+  class="rounded-md border border-border bg-card text-card-foreground shadow-sm"
+>
+  <div
+    class="flex flex-col space-y-1.5 p-6"
+  >
+    <div
+      class="leading-none tracking-tight font-heading font-semibold"
+    >
+      Recent returns
+    </div>
+  </div>
+  <div
+    class="p-6 pt-0"
+  >
+    Twelve items inspected this week.
+  </div>
+</div>
+`;
+
+exports[`shared component set — Amazon-official snapshots > MetricCard with label/value/hint/trend/icon renders its official markup 1`] = `
+<div
+  class="rounded-md border border-border bg-card text-card-foreground shadow-sm p-4"
+>
+  <div
+    class="flex items-start justify-between gap-2"
+  >
+    <p
+      class="text-xs font-medium uppercase tracking-wide text-muted-foreground"
+    >
+      Items resold
+    </p>
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-recycle size-4 shrink-0 text-muted-foreground"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"
+      />
+      <path
+        d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"
+      />
+      <path
+        d="m14 16-3 3 3 3"
+      />
+      <path
+        d="M8.293 13.596 7.196 9.5 3.1 10.598"
+      />
+      <path
+        d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"
+      />
+      <path
+        d="m13.378 9.633 4.096 1.098 1.097-4.096"
+      />
+    </svg>
+  </div>
+  <p
+    class="mt-2 font-heading text-2xl font-semibold leading-none text-foreground"
+  >
+    1450
+  </p>
+  <p
+    class="mt-1.5 text-xs text-muted-foreground"
+  >
+    vs. 1,200 last quarter
+  </p>
+  <p
+    class="mt-2 flex items-center gap-1 text-xs font-medium text-success"
+  >
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-arrow-up size-3.5"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="m5 12 7-7 7 7"
+      />
+      <path
+        d="M12 19V5"
+      />
+    </svg>
+    <span
+      class="sr-only"
+    >
+      Trending up
+      : 
+    </span>
+    +12% vs last week
+  </p>
+</div>
+`;
+
+exports[`shared component set — Amazon-official snapshots > Table with header + rows renders its official markup 1`] = `
+<div
+  class="relative w-full overflow-auto"
+>
+  <table
+    class="w-full caption-bottom text-foreground text-sm"
+  >
+    <thead
+      class="[&_tr]:border-b bg-neutral-50 [&_tr]:border-border"
+    >
+      <tr
+        class="border-b transition-colors border-border hover:bg-neutral-50 data-[state=selected]:bg-neutral-100"
+      >
+        <th
+          class="text-left align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] h-9 px-3 font-medium text-foreground"
+        >
+          Item
+        </th>
+        <th
+          class="text-left align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] h-9 px-3 font-medium text-foreground"
+        >
+          Condition
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      class="[&_tr:last-child]:border-0"
+    >
+      <tr
+        class="border-b transition-colors border-border hover:bg-neutral-50 data-[state=selected]:bg-neutral-100"
+      >
+        <td
+          class="p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] px-3 py-2 text-foreground"
+        >
+          Echo Dot
+        </td>
+        <td
+          class="p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] px-3 py-2 text-foreground"
+        >
+          Like new
+        </td>
+      </tr>
+      <tr
+        class="border-b transition-colors border-border hover:bg-neutral-50 data-[state=selected]:bg-neutral-100"
+      >
+        <td
+          class="p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] px-3 py-2 text-foreground"
+        >
+          Kindle
+        </td>
+        <td
+          class="p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] px-3 py-2 text-foreground"
+        >
+          Good
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

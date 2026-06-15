@@ -1,0 +1,231 @@
+"use client";
+
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import Image from "next/image";
+import {
+  visibleNavControls,
+  type NavControl,
+} from "@/lib/design-system/compliance";
+import { cn } from "@/lib/utils";
+
+/**
+ * The single Shell_Header for the Second Chance design system.
+ *
+ * Exactly one header is used across every Second Chance surface (Req 2.1). It
+ * replaces the role-specific navbars (`AmazonNavbar`'s second-life branch and
+ * `DashboardNavbar`). It carries:
+ *
+ * - the Second Chance **wordmark** (`public/logos/second-chance-wordmark.svg`,
+ *   rendered through the shared {@link Image} component) with an accessible
+ *   text fallback ("Amazon Second Chance") via the image's non-empty `alt`,
+ * - the **Sub_Brand_Accent** treatment (sustainability green, the
+ *   `--color-accent-secondchance` token) expressed as an accent rule and the
+ *   active-control indicator — this, with the wordmark, marks the
+ *   Brand_Boundary (Req 2.6, 4.4),
+ * - a **fixed-order navigation control set** with identical labels and identical
+ *   ordering on every surface — the header takes no per-surface customization,
+ *   so navigation is provably identical across surfaces (Req 4.3, Property 8), and
+ * - a **Storefront-return control** labeled to indicate returning to the
+ *   Storefront, targeting `/` (Req 4.2).
+ *
+ * Every control (the primary nav set *and* the Storefront-return control) is
+ * routed through {@link visibleNavControls}, so any control whose target does
+ * not resolve to a displayed surface is withheld from render (Req 4.6, 5.4).
+ * Because the control targets are all members of {@link RESOLVABLE_ROUTES},
+ * no dead/placeholder link (e.g. `/evaluate`, `#`) can appear here.
+ *
+ * No inline hex literals and no emoji — all styling flows from Design_Tokens.
+ *
+ * Validates: Requirements 2.1, 2.6, 4.2, 4.3, 4.4, 4.6, 5.4
+ */
+
+/**
+ * The set of routes that resolve to a displayed surface, derived from the App
+ * Router tree under `apps/web/src/app`. Exported so navigation compliance
+ * checks and tests reuse exactly the same registry the header renders against.
+ *
+ * Members:
+ * - Second Chance hub + children: `/second-life`, `/second-life/buy`,
+ *   `/second-life/sell`, `/second-life/partner`
+ * - Role portals: `/customer`, `/seller`, `/ngo`, `/kirana`, `/admin`
+ * - Refurbished marketplace: `/shop-refurbished`
+ * - Storefront entry/return surfaces: `/`, `/search`, `/cart`, `/checkout`
+ *
+ * Non-members (e.g. `/evaluate`, `#`) are dead/placeholder targets and are
+ * both flagged by the compliance checker and withheld from render.
+ */
+export const RESOLVABLE_ROUTES: ReadonlySet<string> = new Set<string>([
+  // Second Chance hub + children
+  "/second-life",
+  "/second-life/buy",
+  "/second-life/sell",
+  "/second-life/partner",
+  // Role portals
+  "/customer",
+  "/seller",
+  "/ngo",
+  "/kirana",
+  "/admin",
+  // Refurbished marketplace
+  "/shop-refurbished",
+  // Storefront entry/return surfaces
+  "/",
+  "/search",
+  "/cart",
+  "/checkout",
+]);
+
+/**
+ * Intrinsic dimensions of the wordmark asset
+ * (`public/logos/second-chance-wordmark.svg`, `viewBox="0 0 260 48"`), used to
+ * reserve layout space and express the aspect ratio.
+ */
+const WORDMARK_WIDTH = 260;
+const WORDMARK_HEIGHT = 48;
+const WORDMARK_SRC = "/logos/second-chance-wordmark.svg";
+/** Accessible text fallback for the wordmark (the image's non-empty `alt`). */
+const WORDMARK_ALT = "Amazon Second Chance";
+/** The wordmark links to the Second Chance hub. */
+const WORDMARK_HREF = "/second-life";
+
+/**
+ * The fixed, ordered primary navigation control set. Identical labels and
+ * identical ordering on every Second Chance surface (Req 4.3). Every target is
+ * a member of {@link RESOLVABLE_ROUTES}.
+ */
+export const SHELL_NAV_CONTROLS: readonly NavControl[] = [
+  { label: "Second Chance Home", targetRoute: "/second-life" },
+  { label: "Shop Refurbished", targetRoute: "/shop-refurbished" },
+  { label: "Buy", targetRoute: "/second-life/buy" },
+  { label: "Sell", targetRoute: "/second-life/sell" },
+  { label: "Become a Partner", targetRoute: "/second-life/partner" },
+];
+
+/**
+ * The Storefront-return control, labeled to indicate returning to the
+ * Storefront, targeting `/` (Req 4.2). Routed through {@link visibleNavControls}
+ * like every other control.
+ */
+export const STOREFRONT_RETURN_CONTROL: NavControl = {
+  label: "Back to Amazon Store",
+  targetRoute: "/",
+};
+
+/**
+ * The Shell_Header takes no per-surface customization: the navigation control
+ * set is fixed and identical across surfaces (Req 4.3). The wordmark and
+ * Sub_Brand_Accent are always shown.
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ShellHeaderProps {}
+
+/** True when `pathname` corresponds to the control's `targetRoute`. */
+function isActiveRoute(pathname: string | null, targetRoute: string): boolean {
+  if (!pathname) {
+    return false;
+  }
+  if (targetRoute === "/") {
+    return pathname === "/";
+  }
+  if (targetRoute === "/second-life") {
+    // The hub "home" highlights only on the hub itself, not its children,
+    // so a single primary control is active at a time.
+    return pathname === "/second-life";
+  }
+  return pathname === targetRoute || pathname.startsWith(`${targetRoute}/`);
+}
+
+export function ShellHeader(_props: ShellHeaderProps): React.ReactElement {
+  const pathname = usePathname();
+
+  // Route every control through the compliance gate so unresolved targets are
+  // withheld. With the fixed set above, all controls resolve.
+  const navControls = visibleNavControls(
+    [...SHELL_NAV_CONTROLS],
+    RESOLVABLE_ROUTES,
+  );
+  const [storefrontReturn] = visibleNavControls(
+    [STOREFRONT_RETURN_CONTROL],
+    RESOLVABLE_ROUTES,
+  );
+
+  return (
+    <header
+      className={cn(
+        // White surface + subtle border (Amazon-official), accent rule carries
+        // the Sub_Brand_Accent treatment (Req 2.6, 4.4).
+        "sticky top-0 z-40 w-full",
+        "bg-background text-foreground",
+        "border-b border-border border-t-2 border-t-accent-secondchance",
+      )}
+    >
+      <div className="mx-auto flex w-full max-w-[1500px] flex-col gap-2 px-6 py-3">
+        {/* Top row: wordmark + Storefront-return control */}
+        <div className="flex items-center justify-between gap-4">
+          <Link
+            href={WORDMARK_HREF}
+            aria-label={WORDMARK_ALT}
+            className="inline-flex items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <Image
+              src={WORDMARK_SRC}
+              alt={WORDMARK_ALT}
+              width={WORDMARK_WIDTH}
+              height={WORDMARK_HEIGHT}
+              loading="eager"
+              className="h-10 w-auto"
+            />
+          </Link>
+
+          {storefrontReturn ? (
+            <Link
+              href={storefrontReturn.targetRoute}
+              className={cn(
+                "inline-flex items-center rounded-sm px-3 py-1.5 text-sm font-medium",
+                "text-muted-foreground hover:text-foreground hover:underline",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+              )}
+            >
+              {storefrontReturn.label}
+            </Link>
+          ) : null}
+        </div>
+
+        {/* Nav row: fixed-order primary control set, identical on every surface */}
+        <nav aria-label="Second Chance" className="-mx-2">
+          <ul className="flex flex-wrap items-center gap-1">
+            {navControls.map((control) => {
+              const active = isActiveRoute(pathname, control.targetRoute);
+              return (
+                <li key={control.targetRoute}>
+                  <Link
+                    href={control.targetRoute}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "inline-flex items-center rounded-sm px-2 py-1.5 text-sm font-medium",
+                      "border-b-2 transition-colors",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                      active
+                        ? // Active control carries the Sub_Brand_Accent.
+                          "border-accent-secondchance text-accent-secondchance"
+                        : "border-transparent text-foreground hover:border-accent-secondchance hover:text-accent-secondchance",
+                    )}
+                  >
+                    {control.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+ShellHeader.displayName = "ShellHeader";
+
+export default ShellHeader;

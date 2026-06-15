@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon 2nd Life - High Fidelity Interface</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Public Sans', sans-serif; background-color: #f4f6f8; }
+    .amazon-grid-bg { background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 16px 16px; }
+  </style>
+</head>
+<body class="amazon-grid-bg min-h-screen p-6 flex justify-center items-start">
+
+  <div class="w-full max-w-[1250px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-200">
+    
+    <header class="bg-[#0f1111] text-white">
+      <div class="px-4 py-2.5 flex items-center justify-between gap-4 text-xs">
+        <div class="flex items-center shrink-0 cursor-pointer">
+          <span class="text-xl font-bold tracking-tight text-white">
+            amazon <span class="text-[#ff9900] font-normal ml-0.5">2nd Life</span>
+          </span>
+        </div>
+
+        <div class="flex flex-1 max-w-2xl mx-4">
+          <div class="bg-[#f3f3f3] text-gray-700 px-3 py-2 rounded-l border-r border-gray-300 flex items-center gap-1 text-[11px] cursor-pointer hover:bg-gray-200">
+            All <i class="fa-solid fa-caret-down text-[8px] ml-1"></i>
+          </div>
+          <input type="text" value="Amazon 2nd Life" class="w-full px-4 py-2 text-black focus:outline-none text-sm font-medium">
+          <button class="bg-[#febd69] hover:bg-[#f3a847] text-slate-900 px-6 rounded-r font-bold text-xs uppercase tracking-wider">
+            Search
+          </button>
+        </div>
+
+        <div class="flex items-center space-x-6 text-[11px] font-medium shrink-0">
+          <div class="flex items-center gap-2 cursor-pointer p-1 rounded">
+            <span class="text-base">🇺🇸</span>
+            <div class="leading-none text-left">
+              <p class="text-[9px] text-gray-400">Customer care</p>
+              <p class="font-bold flex items-center mt-0.5">Amazon 2nd Life <i class="fa-solid fa-caret-down text-[8px] ml-1"></i></p>
+            </div>
+          </div>
+          <div class="text-left cursor-pointer">
+            <p class="text-gray-400 text-[9px]">Your daily</p>
+            <p class="font-bold mt-0.5">0 Orders</p>
+          </div>
+          <div class="flex items-center gap-1 cursor-pointer font-bold relative text-sm">
+            <i class="fa-solid fa-cart-shopping text-2xl text-[#ff9900]"></i>
+            <span class="absolute -top-1 left-2.5 text-[#ff9900] text-[11px] font-bold">0</span>
+            <span class="text-xs mt-2 ml-1 text-white">Cart</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[#232f3e] px-4 py-2 text-xs flex items-center justify-between font-medium text-gray-200 border-t border-gray-700/50">
+        <div class="flex items-center space-x-5">
+          <button class="hover:text-white flex items-center gap-1.5 font-bold"><i class="fa-solid fa-bars text-sm"></i> All</button>
+          <a href="#" class="hover:text-white">Main Menu</a>
+          <a href="#" class="hover:text-white flex items-center">Shop Benefits <i class="fa-solid fa-caret-down text-[8px] ml-1 text-gray-400"></i></a>
+          <a href="#" class="hover:text-white">Business</a>
+          <a href="#" class="hover:text-white">Kirana Partner</a>
+          <a href="#" class="hover:text-white">Corporation</a>
+          <a href="#" class="hover:text-white">Grieving</a>
+          <a href="#" class="hover:text-white">Help</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="bg-white p-8 text-center border-b border-gray-100">
+      <h2 class="text-3xl font-extrabold text-slate-950 tracking-tight">Login/Register</h2>
+      <p class="text-xs text-gray-500 mt-1.5 mb-6">Amazon and Life Commerce, an integrated portal.</p>
+      
+      <div class="flex flex-wrap justify-center gap-4 font-bold text-sm">
+        <button class="bg-[#146eb4] text-white px-9 py-3 rounded-md shadow-sm hover:bg-sky-700 transition-all">Customer Portal</button>
+        <button class="bg-[#2e7d32] text-white px-9 py-3 rounded-md shadow-sm hover:bg-emerald-800 transition-all">Seller Central</button>
+        <button class="bg-[#f3a847] text-white px-9 py-3 rounded-md shadow-sm hover:bg-amber-600 transition-all">Kirana Partner Hub</button>
+        <button class="bg-[#6a1b9a] text-white px-9 py-3 rounded-md shadow-sm hover:bg-purple-900 transition-all">NGO Donation Portal</button>
+      </div>
+    </div>
+
+    <main class="p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <section class="lg:col-span-5 space-y-2">
+        <h3 class="text-2xl font-black text-slate-900 tracking-tight">1. Overview</h3>
+        <h4 class="text-base font-bold text-slate-800">Al-Graded, Certified Refurbished</h4>
+        <p class="text-xs text-gray-400 mb-4">Featured products and savings and quality</p>
+        
+        <div class="grid grid-cols-3 gap-3 pt-2">
+          
+          <div class="bg-white border border-gray-200 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-xs relative">
+            <span class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[9px] font-extrabold px-1 py-0.5 rounded-full border border-emerald-200"><i class="fa-solid fa-circle-check"></i> AI</span>
+            <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=150&auto=format&fit=crop&q=60" alt="Watch" class="w-16 h-16 object-contain my-3">
+            <div class="space-y-1 w-full">
+              <p class="text-[10px] font-bold text-slate-800 leading-tight">Al-Graded, Certified Refurbished</p>
+              <div class="text-[#ff9900] text-[8px] flex justify-center gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <span class="text-[9px] text-emerald-600 font-bold bg-emerald-50/70 py-0.5 rounded-md border border-emerald-100/50 block"><i class="fa-solid fa-circle-check"></i> Green Credits</span>
+            </div>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-xs relative">
+            <span class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[9px] font-extrabold px-1 py-0.5 rounded-full border border-emerald-200"><i class="fa-solid fa-circle-check"></i> AI</span>
+            <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=150&auto=format&fit=crop&q=60" alt="Laptop" class="w-16 h-16 object-contain my-3">
+            <div class="space-y-1 w-full">
+              <p class="text-[10px] font-bold text-slate-800 leading-tight">Al-Graded, Certified Refurbished</p>
+              <div class="text-[#ff9900] text-[8px] flex justify-center gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <span class="text-[9px] text-emerald-600 font-bold bg-emerald-50/70 py-0.5 rounded-md border border-emerald-100/50 block"><i class="fa-solid fa-circle-check"></i> Green Credits</span>
+            </div>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-xs relative">
+            <span class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[9px] font-extrabold px-1 py-0.5 rounded-full border border-emerald-200"><i class="fa-solid fa-circle-check"></i> AI</span>
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=150&auto=format&fit=crop&q=60" alt="Phone" class="w-16 h-16 object-contain my-3">
+            <div class="space-y-1 w-full">
+              <p class="text-[10px] font-bold text-slate-800 leading-tight">Al-Graded, Certified Refurbished</p>
+              <div class="text-[#ff9900] text-[8px] flex justify-center gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <span class="text-[9px] text-emerald-600 font-bold bg-emerald-50/70 py-0.5 rounded-md border border-emerald-100/50 block"><i class="fa-solid fa-circle-check"></i> Green Credits</span>
+            </div>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-xs relative">
+            <span class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[9px] font-extrabold px-1 py-0.5 rounded-full border border-emerald-200"><i class="fa-solid fa-circle-check"></i> AI</span>
+            <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=150&auto=format&fit=crop&q=60" alt="Phone" class="w-16 h-16 object-contain my-3">
+            <div class="space-y-1 w-full">
+              <p class="text-[10px] font-bold text-slate-800 leading-tight">Al-Graded, Certified Refurbished</p>
+              <div class="text-[#ff9900] text-[8px] flex justify-center gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <span class="text-[9px] text-emerald-600 font-bold bg-emerald-50/70 py-0.5 rounded-md border border-emerald-100/50 block"><i class="fa-solid fa-circle-check"></i> Green Credits</span>
+            </div>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-xs relative">
+            <span class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[9px] font-extrabold px-1 py-0.5 rounded-full border border-emerald-200"><i class="fa-solid fa-circle-check"></i> AI</span>
+            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=150&auto=format&fit=crop&q=60" alt="Watch" class="w-16 h-16 object-contain my-3">
+            <div class="space-y-1 w-full">
+              <p class="text-[10px] font-bold text-slate-800 leading-tight">Al-Graded, Certified Refurbished</p>
+              <div class="text-[#ff9900] text-[8px] flex justify-center gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <span class="text-[9px] text-emerald-600 font-bold bg-emerald-50/70 py-0.5 rounded-md border border-emerald-100/50 block"><i class="fa-solid fa-circle-check"></i> Green Credits</span>
+            </div>
+          </div>
+
+          <div class="bg-white border border-gray-200 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-xs relative">
+            <span class="absolute top-2 right-2 bg-emerald-50 text-emerald-600 text-[9px] font-extrabold px-1 py-0.5 rounded-full border border-emerald-200"><i class="fa-solid fa-circle-check"></i> AI</span>
+            <img src="https://images.unsplash.com/photo-1565630916779-e303be97b6f5?w=150&auto=format&fit=crop&q=60" alt="Phone" class="w-16 h-16 object-contain my-3">
+            <div class="space-y-1 w-full">
+              <p class="text-[10px] font-bold text-slate-800 leading-tight">Al-Graded, Certified Refurbished</p>
+              <div class="text-[#ff9900] text-[8px] flex justify-center gap-0.5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <span class="text-[9px] text-emerald-600 font-bold bg-emerald-50/70 py-0.5 rounded-md border border-emerald-100/50 block"><i class="fa-solid fa-circle-check"></i> Green Credits</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="lg:col-span-7 space-y-6">
+        
+        <section class="space-y-2">
+          <h3 class="text-2xl font-black text-slate-900 tracking-tight">Hero Panel</h3>
+          
+          <div class="bg-[#112214] rounded-xl overflow-hidden flex flex-col md:flex-row justify-between items-center relative min-h-[250px] p-8 text-white border border-emerald-950/60 shadow-md">
+            
+            <div class="max-w-sm space-y-3.5 z-10 text-left">
+              <h2 class="text-2xl md:text-3xl font-black tracking-wide uppercase leading-tight text-white">
+                AI-Powered Returns<br>& Sustainable Resale
+              </h2>
+              <p class="text-xs text-gray-300 font-light leading-relaxed">
+                Al-powered resales to extend and exercise returns, enhanced greenness and great announcements awaits.
+              </p>
+              <button class="bg-white text-slate-950 text-xs font-bold px-5 py-2 rounded-full shadow hover:bg-gray-100 flex items-center gap-1.5 transition-all">
+                Shop now <i class="fa-solid fa-chevron-right text-[8px]"></i>
+              </button>
+            </div>
+
+            <div class="w-full md:w-1/2 flex justify-end items-center mt-6 md:mt-0 relative z-10">
+              <div class="relative bg-gradient-to-br from-slate-900 to-slate-950 p-4 border-[5px] border-slate-700/80 rounded-xl shadow-2xl flex flex-col justify-center items-center text-center w-56 h-36 font-bold font-mono">
+                <div class="w-12 h-12 rounded-full border border-emerald-500/50 flex items-center justify-center mb-1 bg-emerald-950/40">
+                  <i class="fa-solid fa-arrows-spin text-xl animate-spin text-emerald-400"></i>
+                </div>
+                <span class="text-base font-black uppercase tracking-widest text-white">AI</span>
+                <span class="text-[8px] text-emerald-400 tracking-wider uppercase font-semibold">Powered Resale</span>
+              </div>
+            </div>
+
+            <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1.5 z-20">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-gray-600"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-gray-600"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-gray-600"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+
+          <div class="bg-white border-t-4 border-[#146eb4] border-x border-b border-gray-200 rounded-b-xl overflow-hidden flex flex-col justify-between shadow-xs">
+            <div class="p-3 text-left">
+              <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=150&auto=format&fit=crop&q=60" alt="Preowned" class="w-full h-24 object-cover rounded-md mb-2">
+              <h4 class="text-xs font-bold text-slate-900 leading-tight">Shop Pre-owned</h4>
+              <p class="text-[10px] text-gray-500 mt-1 leading-tight">Great prices for owned products and more.</p>
+            </div>
+            <div class="p-3 pt-0">
+              <button class="w-full bg-[#146eb4] text-white font-bold text-[10px] py-1.5 rounded flex items-center justify-center gap-1 hover:bg-sky-700">Learn more <i class="fa-solid fa-chevron-right text-[7px]"></i></button>
+            </div>
+          </div>
+
+          <div class="bg-white border-t-4 border-[#2e7d32] border-x border-b border-gray-200 rounded-b-xl overflow-hidden flex flex-col justify-between shadow-xs">
+            <div class="p-3 text-left">
+              <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=150&auto=format&fit=crop&q=60" alt="P2P Market" class="w-full h-24 object-cover rounded-md mb-2">
+              <h4 class="text-xs font-bold text-slate-900 leading-tight">Sell Your Item (P2P)</h4>
+              <p class="text-[10px] text-gray-500 mt-1 leading-tight">Sell used items online and make more.</p>
+            </div>
+            <div class="p-3 pt-0">
+              <button class="w-full bg-[#2e7d32] text-white font-bold text-[10px] py-1.5 rounded flex items-center justify-center gap-1 hover:bg-emerald-800">Learn more <i class="fa-solid fa-chevron-right text-[7px]"></i></button>
+            </div>
+          </div>
+
+          <div class="bg-white border-t-4 border-[#f3a847] border-x border-b border-gray-200 rounded-b-xl overflow-hidden flex flex-col justify-between shadow-xs">
+            <div class="p-3 text-left">
+              <img src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=150&auto=format&fit=crop&q=60" alt="Kirana Store" class="w-full h-24 object-cover rounded-md mb-2">
+              <h4 class="text-xs font-bold text-slate-900 leading-tight">Partner as local Kirana Hub</h4>
+              <p class="text-[10px] text-gray-500 mt-1 leading-tight">Partner as own local Kirana Hub near your areas.</p>
+            </div>
+            <div class="p-3 pt-0">
+              <button class="w-full bg-[#f3a847] text-white font-bold text-[10px] py-1.5 rounded flex items-center justify-center gap-1 hover:bg-amber-600">Learn more <i class="fa-solid fa-chevron-right text-[7px]"></i></button>
+            </div>
+          </div>
+
+          <div class="bg-white border-t-4 border-[#6a1b9a] border-x border-b border-gray-200 rounded-b-xl overflow-hidden flex flex-col justify-between shadow-xs">
+            <div class="p-3 text-left">
+              <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=150&auto=format&fit=crop&q=60" alt="NGO Charity" class="w-full h-24 object-cover rounded-md mb-2">
+              <h4 class="text-xs font-bold text-slate-900 leading-tight">Receive Product Donations (NGO)</h4>
+              <p class="text-[10px] text-gray-500 mt-1 leading-tight">Receive product donations and serve communities NGO.</p>
+            </div>
+            <div class="p-3 pt-0">
+              <button class="w-full bg-[#6a1b9a] text-white font-bold text-[10px] py-1.5 rounded flex items-center justify-center gap-1 hover:bg-purple-900">Learn more <i class="fa-solid fa-chevron-right text-[7px]"></i></button>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </main>
+
+    <footer class="bg-slate-50 border-t border-gray-200 p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <div class="lg:col-span-4 text-left space-y-2">
+        <h3 class="text-xl font-black text-slate-900 tracking-tight">The Vision Implemented</h3>
+        <p class="text-xs text-gray-500 leading-relaxed font-light">
+          The Vision 2nd Life Commerce for integrated patine commerce designons an innovzen soxiety turnover emf, astonwns travel and customer antides the goal them and ensata amat conger requiements, bens medtetha, and indamentaint bararanfaliitotcs.
+        </p>
+      </div>
+
+      <div class="lg:col-span-3 text-left space-y-2">
+        <h4 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+          <i class="fa-solid fa-gear text-sky-600 animate-spin-slow"></i> Our AI Core
+        </h4>
+        <p class="text-[11px] text-gray-400 leading-normal">
+          Link to ucaonent the decision flow its twist and flow diagram your core vision from image. ef6365.png
+        </p>
+        <button class="bg-[#0f1111] hover:bg-slate-800 text-white text-[10px] font-bold px-4 py-1.5 rounded shadow flex items-center gap-1 transition-all">
+          Learn more <i class="fa-solid fa-chevron-right text-[7px]"></i>
+        </button>
+      </div>
+
+      <div class="lg:col-span-5 text-left space-y-2">
+        <h4 class="text-xs font-bold text-slate-800 tracking-wide font-mono text-center">Our AI Core - Decision Flow</h4>
+        
+        <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-2xs">
+          <div class="grid grid-cols-5 gap-1 text-center items-center">
+            
+            <div class="flex flex-col items-center">
+              <div class="w-10 h-10 rounded-full bg-sky-50 border border-sky-100 text-sky-600 flex items-center justify-center text-sm"><i class="fa-solid fa-cart-shopping"></i></div>
+              <span class="text-[10px] font-bold text-gray-600 mt-1.5">Resell</span>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <div class="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+              <span class="text-[10px] font-bold text-gray-600 mt-1.5">Refurb</span>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <div class="w-10 h-10 rounded-full bg-purple-50 border border-purple-100 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-heart"></i></div>
+              <span class="text-[10px] font-bold text-gray-600 mt-1.5">Donate</span>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <div class="w-10 h-10 rounded-full bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-recycle"></i></div>
+              <span class="text-[10px] font-bold text-gray-600 mt-1.5">Recycle</span>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <div class="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-right-left"></i></div>
+              <span class="text-[10px] font-bold text-gray-600 mt-1.5">Exchange</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>
