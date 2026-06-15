@@ -41,7 +41,8 @@ export default function NewReturnFlow() {
 
     try {
       const productId = selectedItem?.id || '00000000-0000-0000-0000-000000000000';
-      const apiUrl = `http://${window.location.hostname}:3001/api/v1/grading/${productId}`;
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || `http://${window.location.hostname}:3001/api/v1`;
+      const apiUrl = `${baseUrl}/grading/${productId}`;
       const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
