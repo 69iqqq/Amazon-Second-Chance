@@ -83,7 +83,7 @@ export async function getReturnRiskPrediction(product: any, reviews: any[], pric
       {
         "riskScore": number (5 to 95, representing the percentage probability of a return),
         "riskLevel": "LOW" | "MEDIUM" | "HIGH",
-        "reason": "You MUST start your reason exactly with the words 'HELLO GEMINI TEST: ' and then briefly summarize the risk."
+        "reason": "A brief summary of the risk based on the data."
       }
     `;
 
@@ -103,7 +103,7 @@ export async function getReturnRiskPrediction(product: any, reviews: any[], pric
       return {
         riskScore: 99,
         riskLevel: 'HIGH',
-        reason: `HELLO GEMINI TEST ERROR: API failed with status ${response.status}. Message: ${errorText.substring(0, 100)}`
+        reason: `API failed with status ${response.status}. Message: ${errorText.substring(0, 100)}`
       };
     }
 
